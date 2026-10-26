@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e8ebf0">
+<title>Mohammad Montasir — ~/portfolio</title>
+<meta name="description" content="Portfolio of Mohammad Montasir — EEE graduate, CTO at Digital Softzone, interested in industrial automation and power systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+
+  /* surfaces: ~70% light / translucent */
+  --bg:#e8ebf0;
+  --glass:rgba(255,255,255,.62);
+  --glass-strong:rgba(255,255,255,.82);
+  --glass-border:rgba(255,255,255,.92);
+  --line:rgba(12,16,24,.09);
+
+  /* ink */
+  --ink:#0c1018;
+  --ink2:#566073;
+
+  /* ~20% charcoal contrast panels */
+  --char:#07090d;
+  --char2:#151a24;
+  --on-dark:#eef2f9;
+  --dim-dark:#a9b3c5;
+
+  /* ~10% blue accent */
+  --blue:#3d7bff;
+  --blue-deep:#2455d9;
+  --blue-soft:#8fb5ff;
+
+  --r-sm:14px;--r-md:22px;--r-lg:30px;
+
+  --shadow:inset 0 1px 0 rgba(255,255,255,.95),0 18px 48px rgba(30,42,66,.10),0 2px 8px rgba(30,42,66,.05);
+  --shadow-hover:inset 0 1px 0 rgba(255,255,255,.95),0 26px 60px rgba(30,42,66,.15),0 4px 12px rgba(30,42,66,.06);
+  --shadow-dark:0 26px 60px rgba(8,12,20,.28),0 4px 14px rgba(8,12,20,.16);
+  --ease:cubic-bezier(.22,1,.36,1);
+
+  --rail:236px;
+  --sans:'Josefin Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --disp:var(--sans);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg);padding-top:env(safe-area-inset-top,0px);scroll-padding-top:24px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  margin:0;
+  color:var(--ink);
+  font:400 16px/1.6 var(--sans);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+/* soft pearl / frosted ambient background */
+.bg{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(55% 45% at 78% 6%,rgba(255,255,255,.95),transparent 70%),
+    radial-gradient(42% 38% at 10% 16%,rgba(255,255,255,.85),transparent 70%),
+    radial-gradient(48% 42% at 94% 80%,rgba(61,123,255,.13),transparent 70%),
+    radial-gradient(40% 34% at 28% 96%,rgba(255,255,255,.75),transparent 70%),
+    radial-gradient(34% 28% at 58% 52%,rgba(170,180,196,.30),transparent 70%),
+    linear-gradient(115deg,transparent 38%,rgba(110,122,140,.09) 47%,transparent 56%),
+    linear-gradient(180deg,#eff1f5,#e2e6ec);
+}
+a{color:var(--blue-deep);text-decoration:none}a:hover{text-decoration:underline}
+::selection{background:var(--blue);color:#fff}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.dark :focus-visible,.term :focus-visible{outline-color:var(--blue-soft)}
+h1,h2,h3{font-family:var(--disp);margin:0;letter-spacing:-.015em}
+
+/* ---------- surfaces ---------- */
+.glass{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--shadow);
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+  backdrop-filter:blur(22px) saturate(150%);
+}
+@supports not (backdrop-filter:blur(1px)){
+  .glass{background:rgba(250,251,253,.96)}
+}
+/* repeated cards: translucent, no blur (mobile performance) */
+.stat,.pc,.box,.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.80),rgba(255,255,255,.56));
+  border:1px solid var(--glass-border);
+  box-shadow:var(--shadow);
+  border-radius:var(--r-md);
+}
+.card.pad{padding:28px 32px}
+.card.panel{padding:30px 34px;border-radius:var(--r-lg)}
+
+/* charcoal contrast panels */
+.dark,.term,.code,.pc.f,.meta{
+  color:var(--on-dark);
+  background:
+    radial-gradient(120% 90% at 100% 0%,rgba(61,123,255,.24),transparent 55%),
+    linear-gradient(160deg,var(--char2),var(--char));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:var(--shadow-dark),inset 0 1px 0 rgba(255,255,255,.10);
+}
+
+/* ---------- desktop navigation ---------- */
+.rail{position:fixed;inset:12px auto 12px 12px;width:var(--rail);border-radius:var(--r-lg);padding:22px 14px 16px;display:flex;flex-direction:column;z-index:40}
+.brand{display:flex;align-items:center;gap:12px;padding:2px 8px 20px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.logo {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+  box-shadow: 0 8px 18px rgba(8, 12, 20, 0.20);
+}
+.brand b{display:block;font:600 15.5px/1.15 var(--sans);color:var(--ink)}
+.brand .sub{display:block;color:var(--ink2);font:11px var(--mono);margin-top:4px}
+.tree-wrap{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none}
+.tree-wrap::-webkit-scrollbar{display:none}
+.tree{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.tree a,.top a{display:flex;align-items:center;gap:13px;color:var(--ink2);font:500 14.5px var(--sans);padding:11px 16px;border-radius:999px;border:1px solid transparent;transition:background 240ms ease,color 240ms ease,box-shadow 240ms ease}
+.tree a:hover,.top a:hover{color:var(--ink);background:rgba(255,255,255,.75);text-decoration:none}
+.tree a.on,.top a.on{color:#fff;background:linear-gradient(180deg,#1d2430,#07090d);box-shadow:0 10px 22px rgba(8,12,20,.26)}
+.ic{width:19px;height:19px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.rail-foot{padding:14px 6px 0;border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap}
+.rail-foot a{flex:1;text-align:center;color:var(--ink);font:500 13px var(--sans);padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid var(--glass-border);transition:background 240ms ease,color 240ms ease}
+.rail-foot a:hover{background:var(--char);color:#fff;text-decoration:none}
+
+/* ---------- mobile navigation: floating glass strip ---------- */
+.top{display:none;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:40;border-radius:999px;padding:6px;gap:2px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.top::-webkit-scrollbar{display:none}
+.top a{display:inline-flex;gap:8px;font-size:13px;padding:10px 14px}
+
+main{margin-left:calc(var(--rail) + 40px);padding:48px 44px 40px 0;max-width:1180px}
+@media(max-width:900px){.rail{display:none}.top{display:flex}main{margin:0;padding:22px 16px 120px;max-width:none}}
+
+section{padding:60px 0;scroll-margin-top:24px}
+.hero{padding-top:0}
+
+/* reveal on scroll (only when JS is running) */
+.js section.rv{opacity:0;transform:translateY(20px);transition:opacity 700ms var(--ease),transform 700ms var(--ease)}
+.js section.rv.in{opacity:1;transform:none}
+
+/* ---------- hero ---------- */
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);grid-template-areas:"text photo" "term photo";grid-template-rows:auto 1fr;gap:22px 24px;align-items:start}
+.hero-text{grid-area:text;padding:4px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.72);border:1px solid var(--glass-border);box-shadow:var(--shadow);color:var(--ink2);font:12.5px/1.4 var(--mono)}
+.eyebrow i{color:var(--blue);font-style:normal;text-shadow:0 0 10px rgba(61,123,255,.6)}
+.name{font-size:clamp(40px,5.6vw,70px);line-height:1.02;font-weight:500;letter-spacing:-.03em;margin-top:24px;color:var(--ink)}
+.tag{color:var(--ink2);font-size:17px;margin:16px 0 0;max-width:56ch}
+.tag em,
+.lede b {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ink);
+  background: none;
+  text-decoration: none;
+}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+
+/* profile photo */
+.badge{grid-area:photo;align-self:stretch;position:relative;min-height:380px;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--glass-border);background:linear-gradient(145deg,#f6f8fb,#cdd3de);box-shadow:var(--shadow)}
+.badge .ini{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:600 64px var(--sans);color:rgba(12,16,24,.22)}
+.badge img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block}
+.badge::after{content:"";position:absolute;inset:auto 0 0 0;height:38%;background:linear-gradient(transparent,rgba(8,12,20,.38));pointer-events:none}
+.badge .cap{position:absolute;left:16px;bottom:16px;z-index:2;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.80);border:1px solid var(--glass-border);color:var(--ink);font:500 13px var(--sans);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+
+/* terminal: compact charcoal panel */
+.term{grid-area:term;position:relative;border-radius:var(--r-lg);overflow:hidden}
+.term::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;z-index:2;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent)}
+.bar{display:flex;align-items:center;gap:8px;padding:13px 20px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);font:12px var(--mono);color:var(--dim-dark)}
+.bar span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.bar span:nth-child(1) {
+  background: #ff5f57;
+}
+
+.bar span:nth-child(2) {
+  background: #febc2e;
+}
+
+.bar span:nth-child(3) {
+  background: #28c840;
+}
+.bar span:first-child{margin-left:0}
+.bar span:nth-child(3){margin-right:6px}
+.tb{padding:18px 22px 6px;min-height:200px;max-height:240px;overflow-y:auto;font:13.5px/1.6 var(--mono);scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.22) transparent}
+.tb .l{margin:0 0 6px;word-break:break-word}
+.p{color:var(--blue-soft)}.o{color:var(--dim-dark)}.o strong{color:#fff;font-weight:700}.ac{color:var(--blue-soft)}
+.inrow{display:flex;align-items:center;gap:10px;margin:6px 16px 16px;padding:9px 16px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);font-family:var(--mono);transition:border-color 220ms ease,box-shadow 220ms ease}
+.inrow:focus-within{border-color:rgba(143,181,255,.7);box-shadow:0 0 0 3px rgba(61,123,255,.22)}
+#in{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font:inherit;font-size:13.5px;caret-color:var(--blue-soft)}
+#in::placeholder{color:#8993a6}
+
+@media(max-width:1060px){
+  .hero-grid{grid-template-columns:1fr;grid-template-areas:"text" "photo" "term"}
+  .badge{align-self:auto;min-height:0;aspect-ratio:16/10;max-height:420px}
+}
+@media(max-width:560px){.badge{aspect-ratio:4/3}}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 24px;border-radius:999px;border:1px solid var(--glass-border);
+  background:rgba(255,255,255,.74);color:var(--ink);
+  font:500 14.5px/1.2 var(--sans);
+  box-shadow:inset 0 1px 0 #fff,0 8px 22px rgba(30,42,66,.08);
+  transition:transform 240ms var(--ease),background 240ms ease,box-shadow 240ms ease,color 240ms ease;
+  cursor:pointer;overflow-wrap:anywhere;
+}
+.btn:hover{background:#fff;color:var(--ink);box-shadow:inset 0 1px 0 #fff,0 14px 32px rgba(30,42,66,.14);transform:translateY(-2px);text-decoration:none}
+.btn:active{transform:scale(.97)}
+.btn.pri{color:#fff;background:linear-gradient(180deg,#1d2430,#07090d);border-color:rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 12px 28px rgba(8,12,20,.28);font-weight:600}
+.btn.pri:hover{color:#fff;background:linear-gradient(180deg,#262f3f,#0a0d13);box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 16px 36px rgba(8,12,20,.34),0 0 0 4px rgba(61,123,255,.18)}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{padding:20px 22px;position:relative;overflow:hidden;transition:transform 280ms var(--ease),box-shadow 280ms ease}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+.stat::before{content:"";display:block;width:22px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--blue),#a9c6ff);margin-bottom:14px}
+.stat::after{content:"";position:absolute;right:-34px;top:-34px;width:104px;height:104px;border-radius:50%;background:radial-gradient(circle,rgba(61,123,255,.16),transparent 70%);pointer-events:none}
+.stat b{font:500 42px/1 var(--sans);color:var(--ink);display:block;letter-spacing:-.02em}
+.stat small{display:block;margin-top:10px;font-size:13.5px;line-height:1.35;color:var(--ink2)}
+
+/* ---------- section headings ---------- */
+.fh{display:flex;align-items:center;gap:14px;margin-bottom:26px;flex-wrap:wrap}
+.fn{display:inline-flex;align-items:center;font:600 12.5px var(--mono);color:var(--ink);background:rgba(255,255,255,.75);border:1px solid var(--glass-border);box-shadow:var(--shadow);padding:7px 15px;border-radius:999px}
+.fn::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue);margin-right:9px;box-shadow:0 0 0 3px rgba(61,123,255,.18)}
+.fh h2{font-size:clamp(28px,3.2vw,40px);font-weight:500;letter-spacing:-.02em}
+.lede{color:var(--ink2);max-width:70ch;margin:0 0 16px}
+.lede:last-child{margin-bottom:0}
+
+/* ---------- about ---------- */
+.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.meta{list-style:none;margin:0;padding:10px 26px;border-radius:var(--r-lg);font-size:15px}
+.meta li{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.10);align-items:baseline}
+.meta li:last-child{border-bottom:0}
+.meta .k{color:var(--blue-soft);width:84px;flex:0 0 auto;font:12.5px var(--mono)}
+
+/* ---------- experience timeline ---------- */
+.log{list-style:none;margin:0 0 0 6px;padding:0;border-left:1px solid var(--line)}
+.c{position:relative;padding:0 0 32px 30px}.c:last-child{padding-bottom:0}
+.c::before{content:"";position:absolute;left:-6px;top:6px;width:11px;height:11px;border-radius:50%;background:linear-gradient(135deg,#6a9bff,var(--blue-deep));box-shadow:0 0 0 4px rgba(255,255,255,.95),0 0 0 5px rgba(61,123,255,.30),0 0 14px rgba(61,123,255,.45)}
+.c.past::before{background:#aab3c2;box-shadow:0 0 0 4px rgba(255,255,255,.95)}
+.hash{color:var(--blue-deep);font:12px var(--mono)}
+.hd{display:inline-block;margin-left:10px;font:700 10.5px var(--mono);color:#fff;background:linear-gradient(135deg,#3a76f5,#1f4fd0);padding:2px 10px;border-radius:999px}
+.role{font:600 21px/1.25 var(--sans);margin-top:8px;color:var(--ink)}.org{color:var(--ink2);font-size:15px}
+.c ul{margin:10px 0 0;padding-left:18px;color:var(--ink2);font-size:15.5px;max-width:68ch}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.tag2{font:11.5px var(--mono);color:var(--ink);border:1px solid var(--line);padding:4px 11px;border-radius:999px;background:rgba(12,16,24,.04)}
+
+/* ---------- projects ---------- */
+.pg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media(min-width:1280px){.pg{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.pg{grid-template-columns:1fr}}
+.pc{padding:22px 24px;display:flex;flex-direction:column;gap:12px;transition:transform 300ms var(--ease),box-shadow 300ms ease,background 300ms ease}
+.pc:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.pc.f{padding:28px 30px;border-radius:var(--r-lg);position:relative;overflow:hidden;background:
+  repeating-radial-gradient(circle at 92% 108%,transparent 0 26px,rgba(255,255,255,.045) 27px 28px),
+  radial-gradient(120% 90% at 100% 0%,rgba(61,123,255,.28),transparent 55%),
+  linear-gradient(160deg,var(--char2),var(--char))}
+.pc.f:hover{box-shadow:0 30px 64px rgba(8,12,20,.34),inset 0 1px 0 rgba(255,255,255,.12)}
+@media(min-width:700px){.pc.f{grid-column:span 2}}
+@media(min-width:1280px){.pc.f{grid-row:span 2}}
+.pt{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pn{font:700 14px var(--mono);min-width:0;overflow-wrap:anywhere;color:var(--ink)}
+.ext{font:700 11px var(--mono);color:#fff;background:linear-gradient(180deg,#1d2430,#07090d);padding:3px 11px;border-radius:999px;white-space:nowrap}
+.pc p{margin:0;color:var(--ink2);font-size:15.5px;flex:1}
+.pc .tags{margin-top:auto}
+.pc.f .pn {
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.4;
+  max-width: calc(100% - 110px);
+  overflow-wrap: anywhere;
+}
+
+.pc.f .pt {
+  align-items: flex-start;
+}
+
+.pc.f .ext{background:linear-gradient(135deg,#4a86ff,#2455d9)}
+.pc.f p{color:var(--dim-dark);font-size:17px;line-height:1.65}
+.pc.f .tag2{color:#dbe6ff;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)}
+
+.pc:not(.f) .pn {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.pc:not(.f) .pt {
+  align-items: flex-start;
+}
+
+/* ---------- skills ---------- */
+.sk{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.sk{grid-template-columns:1fr}}
+.box{padding:22px 24px}
+.box h3{font:600 12px var(--mono);color:var(--ink2);margin-bottom:14px;letter-spacing:.08em}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-size:14px;font-weight:500;padding:7px 15px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.78);color:var(--ink);transition:background 240ms ease,color 240ms ease,transform 240ms var(--ease),border-color 240ms ease}
+.pill:hover{background:var(--char);color:#fff;border-color:var(--char);transform:translateY(-1px)}
+
+/* ---------- rows / education / certifications ---------- */
+.rows{list-style:none;margin:0;padding:0}
+.row{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+.row:first-child{padding-top:0}
+.row:last-child{border:0;padding-bottom:0}
+.row .y{color:var(--blue-deep);font:12.5px var(--mono);padding-top:3px}.row b{font-weight:600;color:var(--ink)}.row .s{color:var(--ink2);margin-top:3px;font-size:14.5px}
+@media(max-width:560px){.row,.row[style]{grid-template-columns:1fr!important;gap:4px}}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--ink2);font:500 11.5px var(--mono);letter-spacing:.04em}
+td:first-child{color:var(--ink);font-weight:600}td{color:var(--ink2)}
+tr:last-child td{border-bottom:0}
+.tw{overflow-x:auto}
+
+/* ---------- contact ---------- */
+.code{padding:24px 26px;font:13.5px/1.8 var(--mono);overflow-x:auto;border-radius:var(--r-lg)}
+.code .k{color:var(--blue-soft)}.code .s{color:var(--on-dark)}.code .d{color:var(--dim-dark)}
+.act{display:flex;flex-direction:column;gap:10px}.act .btn{width:100%;min-height:50px}
+.cn{font-size:11.5px;color:#fff;margin-left:8px;opacity:0;transition:opacity 220ms ease}.cn.show{opacity:1}
+.mailrow{display:flex;gap:10px;align-items:stretch}
+.act .mailrow .pri{flex:1;min-width:0;width:auto}
+.act .cpy{position:relative;flex:0 0 50px;width:50px;padding:0;font-size:17px}
+.cpy .cn{position:absolute;right:0;bottom:calc(100% + 10px);margin:0;padding:5px 12px;border-radius:999px;background:var(--char);border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow-dark);font:11.5px var(--mono);white-space:nowrap;pointer-events:none}
+footer{border-top:1px solid var(--line);padding:24px 0 8px;color:var(--ink2);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<nav class="top glass" id="topnav" aria-label="Sections">
+<a href="#hero" data-t="hero"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg><span>Home</span></a><a href="#about" data-t="about"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.8-4 4-6 7.5-6s6.7 2 7.5 6"/></svg><span>About</span></a><a href="#experience" data-t="experience"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="2.5"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5"/><path d="M3.5 13h17"/></svg><span>Experience</span></a><a href="#projects" data-t="projects"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg><span>Projects</span></a><a href="#skills" data-t="skills"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span>Skills</span></a><a href="#education" data-t="education"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14 2.5 9.5Z"/><path d="M6.5 11.8V16c0 1.2 2.5 2.5 5.5 2.5s5.5-1.3 5.5-2.5v-4.2"/><path d="M21.5 9.5V14"/></svg><span>Education</span></a><a href="#more" data-t="more"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="M8.7 13.2 7.5 20.5 12 18l4.5 2.5-1.2-7.3"/></svg><span>More</span></a><a href="#contact" data-t="contact"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="3"/><path d="m4.5 8 7.5 5.5L19.5 8"/></svg><span>Contact</span></a>
+</nav>
+<aside class="rail glass">
+<div class="brand"><img class="logo" src="Mohammad Montasir.png" alt="Mohammad Montasir"><div><b>Mohammad Montasir</b><span class="sub">EEE · CTO · automation</span></div></div>
+<nav class="tree-wrap" aria-label="Primary">
+<ul class="tree" id="railnav">
+<li><a href="#hero" data-t="hero"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg><span>Home</span></a></li><li><a href="#about" data-t="about"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.8-4 4-6 7.5-6s6.7 2 7.5 6"/></svg><span>About</span></a></li><li><a href="#experience" data-t="experience"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="2.5"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5"/><path d="M3.5 13h17"/></svg><span>Experience</span></a></li><li><a href="#projects" data-t="projects"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg><span>Projects</span></a></li><li><a href="#skills" data-t="skills"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span>Skills</span></a></li><li><a href="#education" data-t="education"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14 2.5 9.5Z"/><path d="M6.5 11.8V16c0 1.2 2.5 2.5 5.5 2.5s5.5-1.3 5.5-2.5v-4.2"/><path d="M21.5 9.5V14"/></svg><span>Education</span></a></li><li><a href="#more" data-t="more"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="M8.7 13.2 7.5 20.5 12 18l4.5 2.5-1.2-7.3"/></svg><span>More</span></a></li><li><a href="#contact" data-t="contact"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="3"/><path d="m4.5 8 7.5 5.5L19.5 8"/></svg><span>Contact</span></a></li>
+</ul>
+</nav>
+<div class="rail-foot"><a href="mailto:mohammadmontasir.official@gmail.com">Email</a><a href="https://www.facebook.com/montasirmoon.ozx" target="_blank" rel="noopener">Facebook</a></div>
+</aside>
+
+<main>
+<section class="hero" id="hero">
+<div class="hero-grid">
+<div class="hero-text">
+<div class="eyebrow"><i>●</i> ~/portfolio $ open to opportunities in industrial automation &amp; engineering</div>
+<h1 class="name">Mohammad Montasir</h1>
+<p class="tag">BSc in <em>Electrical &amp; Electronic Engineering</em> from IIUC, now <em>Chief Technology Officer at Digital Softzone</em>. I work across power systems, optimisation research and product/technology management, with a long-term focus on <em>industrial automation</em>.</p>
+<div class="cta"><a class="btn pri" href="#contact">get in touch →</a><a class="btn" href="#projects">view projects</a><a class="btn" href="mailto:mohammadmontasir.official@gmail.com">email me</a></div>
+</div>
+
+<div class="badge">
+    <span class="ini" aria-hidden="true">MM</span>
+    <img src="Mohammad Montasir.png" alt="Mohammad Montasir" onerror="this.style.display='none'">
+    <span class="cap">CTO · Digital Softzone</span>
+</div>
+
+<div class="term">
+<div class="bar"><span></span><span></span><span></span>Mohammad Montasir: ~</div>
+<div class="tb" id="tb" aria-live="polite"></div>
+<div class="inrow"><span class="p">$</span><input id="in" type="text" autocomplete="off" spellcheck="false" placeholder="type 'help' and press enter…" aria-label="Terminal input" disabled></div>
+</div>
+</div>
+
+<div class="stats">
+<div class="stat"><b>3</b><small>OPF research projects</small></div>
+<div class="stat"><b>9</b><small>engineering projects</small></div>
+<div class="stat"><b>5</b><small>IEEE / career trainings</small></div>
+<div class="stat"><b>4</b><small>languages spoken</small></div>
+</div>
+</section>
+
+<section id="about">
+<div class="fh"><span class="fn">~/about.md</span><h2>About</h2></div>
+<div class="grid2">
+<div class="card pad">
+<p class="lede">Electrical and Electronic Engineering graduate from the International Islamic University Chittagong. I currently work as <b>CTO</b> and <b>Product and Services Manager</b> at Digital Softzone, handling technology management, product development, project coordination and digital solutions.</p>
+<p class="lede">I’m analytical, good at technical coordination and technology evaluation, and I work well across teams. I want to deepen my expertise in <b>industrial automation, control systems and smart industrial technologies</b>, and contribute to efficient, reliable and sustainable industrial operations.</p>
+</div>
+<ul class="meta">
+<li><span class="k">location</span><span>Chattogram, Bangladesh</span></li>
+<li><span class="k">now</span><span>CTO — Digital Softzone</span></li>
+<li><span class="k">studied</span><span>BSc EEE, IIUC (2022–2026)</span></li>
+<li><span class="k">focus</span><span>automation, power systems, optimisation</span></li>
+<li><span class="k">also</span><span>graphic design, photography</span></li>
+</ul>
+</div>
+</section>
+
+<section id="experience">
+<div class="fh"><span class="fn">~/experience.log</span><h2>Experience</h2></div>
+<p class="lede">Technology management, product work and hands-on <b>electrical engineering</b>, plus freelance design on the side.</p>
+<div class="card panel">
+<ol class="log">
+<li class="c"><div class="hash">commit cto2026 — Jun 2026 – present<span class="hd">HEAD</span></div><div class="role">Chief Technology Officer</div><div class="org">Digital Softzone — Chattogram</div>
+<ul><li>Manage technology operations and coordinate software and web development projects.</li><li>Evaluate emerging technologies and support clients’ technical requirements.</li><li>Maintain digital infrastructure; improve internal processes through automation.</li><li>Ensure quality, security and reliability of technology solutions.</li></ul>
+<div class="tags"><span class="tag2">technology management</span><span class="tag2">automation</span><span class="tag2">security</span></div></li>
+<li class="c"><div class="hash">commit psm2024 — Aug 2024 – present<span class="hd">HEAD</span></div><div class="role">Product and Services Manager</div><div class="org">Digital Softzone — Chattogram</div>
+<ul><li>Manage product development and coordinate between technical and business teams.</li><li>Conduct market research and analyse customer needs.</li><li>Plan product improvements and operational strategies.</li></ul>
+<div class="tags"><span class="tag2">product lifecycle</span><span class="tag2">market research</span><span class="tag2">strategy</span></div></li>
+<li class="c past"><div class="hash">commit eng2025 — Nov – Dec 2025</div><div class="role">Electrical Engineer</div><div class="org">Four H Group — Chattogram</div>
+<ul><li>Assisted engineers supervising electrical installation and maintenance at construction sites.</li><li>Worked on power distribution, wiring, load calculations and safety procedures.</li><li>Joined site inspections, troubleshot electrical faults and monitored equipment installation to technical standards.</li></ul>
+<div class="tags"><span class="tag2">power distribution</span><span class="tag2">site supervision</span><span class="tag2">troubleshooting</span></div></li>
+<li class="c past"><div class="hash">commit design2023 — Jan 2023 – present</div><div class="role">Graphic Designer</div><div class="org">Self-employed — Bangladesh</div>
+<ul><li>Design posters, banners and digital media for events, organisations and online platforms.</li><li>Manage multiple client requirements and deadlines.</li></ul>
+<div class="tags"><span class="tag2">Canva</span><span class="tag2">Adobe Illustrator</span><span class="tag2">visual communication</span></div></li>
+</ol>
+</div>
+</section>
+
+<section id="projects">
+<div class="fh"><span class="fn">~/projects/</span><h2>Projects &amp; research</h2></div>
+<p class="lede">Optimal Power Flow research, electrical design and embedded systems.</p>
+<div class="pg">
+<div class="pc f">
+  <div class="pt">
+    <span class="pn">A Hybrid WOA–MFO Metaheuristic Algorithm for Solving Optimal Power Flow Problems</span>
+    <span class="ext">BSc thesis</span>
+  </div>
+  <p>This thesis develops a hybrid Whale Optimization Algorithm–Moth-Flame Optimization (WOA–MFO) approach for solving the Optimal Power Flow problem. Implemented in MATLAB using MATPOWER, the proposed method is evaluated on the IEEE 30-bus and 57-bus benchmark systems. The study examines generation cost, convergence behaviour, solution quality and robustness across independent optimization runs, with comparisons against established hybrid metaheuristic approaches.</p>
+  <div class="tags">
+    <span class="tag2">WOA–MFO</span>
+    <span class="tag2">MATLAB</span>
+    <span class="tag2">MATPOWER</span>
+    <span class="tag2">IEEE 30/57-bus</span>
+  </div>
+</div>
+
+<div class="pc">
+  <div class="pt">
+    <span class="pn">Solution of Optimal Power Flow Problems using Metaheuristic Hybrid APO–WOA Algorithm</span>
+    <span class="ext">research</span>
+  </div>
+  <p>This paper presents a hybrid APO–WOA algorithm for solving constrained Optimal Power Flow problems, combining complementary search strategies and evaluating performance on benchmark power systems.</p>
+  <div class="tags">
+    <span class="tag2">APO–WOA</span>
+    <span class="tag2">MATLAB</span>
+    <span class="tag2">OPF</span>
+  </div>
+</div>
+
+<div class="pc">
+  <div class="pt">
+    <span class="pn">Comparative Performance Analysis of Hybrid Metaheuristic Algorithms for Optimal Power Flow</span>
+    <span class="ext">research paper</span>
+  </div>
+  <p>This study compares hybrid metaheuristic algorithms for Optimal Power Flow on IEEE 30-bus and 57-bus systems, evaluating generation cost, convergence and solution robustness.</p>
+  <div class="tags">
+    <span class="tag2">WOA–MFO</span>
+    <span class="tag2">WOA–APO</span>
+    <span class="tag2">GWO–WOA</span>
+    <span class="tag2">HHO</span>
+  </div>
+</div>
+<div class="pc"><div class="pt"><span class="pn">pv-grid-connected</span><span class="ext">HOMER</span></div><p>Design and simulation of a PV grid-connected renewable energy system in HOMER Energy, as system designer and simulation lead.</p><div class="tags"><span class="tag2">renewables</span><span class="tag2">HOMER Energy</span></div></div>
+<div class="pc"><div class="pt"><span class="pn">residential-room-design</span><span class="ext">design</span></div><p>Complete electrical layout for a residential room: load calculation, wiring plan, circuit protection, lighting and safety-standard compliance.</p></div>
+<div class="pc"><div class="pt"><span class="pn">mosque-wiring-lighting</span><span class="ext">design</span></div><p>Wiring and lighting layout for a mosque: circuit planning, switchboard positions, cable routing, safe distribution and efficient lighting.</p></div>
+<div class="pc"><div class="pt"><span class="pn">heart-rate-monitor</span><span class="ext">Arduino</span></div><p>Real-time heart rate monitor using Arduino and pulse sensors, covering sensor integration, microcontroller code and signal processing. Jun 2024.</p></div>
+<div class="pc"><div class="pt"><span class="pn">smart-smoke-detector</span><span class="ext">Arduino</span></div><p>Smoke detection system with gas sensors that triggers alerts at hazardous levels; sensor interfacing and embedded programming.</p></div>
+<div class="pc"><div class="pt"><span class="pn">face-reaction-detect</span><span class="ext">.py</span></div><p>Facial expression detection using Python, computer vision and machine learning frameworks for facial feature analysis.</p></div>
+</div>
+</section>
+
+<section id="skills">
+<div class="fh"><span class="fn">~/skills.json</span><h2>Skills</h2></div>
+<div class="sk">
+<div class="box"><h3>ENGINEERING</h3><div class="pills"><span class="pill">MATLAB</span><span class="pill">Power system simulation</span><span class="pill">Circuit analysis</span><span class="pill">Circuit maintenance</span><span class="pill">Installation &amp; site supervision</span><span class="pill">Fault troubleshooting</span><span class="pill">Electrical safety standards</span><span class="pill">Automation technology</span></div></div>
+<div class="box"><h3>RESEARCH &amp; ANALYSIS</h3><div class="pills"><span class="pill">Technical research</span><span class="pill">Algorithm development</span><span class="pill">Data analysis</span><span class="pill">Data-driven decisions</span><span class="pill">Documentation</span><span class="pill">Teaching electronics</span></div></div>
+<div class="box"><h3>MANAGEMENT</h3><div class="pills"><span class="pill">Product lifecycle</span><span class="pill">Market research</span><span class="pill">Strategic planning</span><span class="pill">Technology evaluation</span><span class="pill">Project coordination</span></div></div>
+<div class="box"><h3>DESIGN &amp; SOFT SKILLS</h3><div class="pills"><span class="pill">Graphic design</span><span class="pill">Canva</span><span class="pill">Adobe Illustrator</span><span class="pill">Time management</span><span class="pill">Problem-solving</span><span class="pill">Analytical thinking</span></div></div>
+</div>
+</section>
+
+<section id="education">
+<div class="fh"><span class="fn">~/education.yml</span><h2>Education</h2></div>
+<div class="card panel">
+<ul class="rows">
+<li class="row"><span class="y">2022 – 2026</span><div><b>BSc in Electrical &amp; Electronic Engineering</b><div class="s">International Islamic University Chittagong (IIUC) · EQF Level 6<br>Electrical circuits, power systems, electronics, control systems, signal processing, power generation &amp; distribution, microprocessors, electrical machines</div></div></li>
+<li class="row"><span class="y">2018 – 2020</span><div><b>Higher Secondary Certificate</b><div class="s">CDA Public School and College · Physics, Chemistry, Mathematics, English</div></div></li>
+<li class="row"><span class="y">2016 – 2018</span><div><b>Secondary School Certificate</b><div class="s">Chittagong Ideal School and College · Mathematics, Physics, Chemistry, Biology, English, ICT, Bangla</div></div></li>
+</ul>
+</div>
+</section>
+
+<section id="more">
+<div class="fh"><span class="fn">~/more.txt</span><h2>Certifications, languages &amp; volunteering</h2></div>
+<div class="sk">
+<div class="box"><h3>CERTIFICATIONS &amp; TRAINING</h3>
+<ul class="rows">
+<li class="row" style="grid-template-columns:96px 1fr"><span class="y">Nov 2025</span><div><b>Deep Learning in Biomedical Image Analysis</b><div class="s">IEEE Computer Society</div></div></li>
+<li class="row" style="grid-template-columns:96px 1fr"><span class="y">Nov 2025</span><div><b>Enhancing Creative Skills Through Design</b><div class="s">IIUC ETE Career Forum</div></div></li>
+<li class="row" style="grid-template-columns:96px 1fr"><span class="y">Nov 2025</span><div><b>Robo Soccer Bootcamp: From Idea to Playing Bot</b><div class="s">IEEE</div></div></li>
+<li class="row" style="grid-template-columns:96px 1fr"><span class="y">Nov 2024</span><div><b>Industry Insights &amp; Career Talk: Electronics, Embedded System &amp; Telecom</b><div class="s">IEEE</div></div></li>
+<li class="row" style="grid-template-columns:96px 1fr"><span class="y">Oct 2023</span><div><b>Engineering Drawing &amp; Automation Skill in Industry</b><div class="s">IEEE seminar</div></div></li>
+</ul></div>
+<div>
+<div class="box"><h3>LANGUAGES</h3><div class="tw"><table><tr><th>Language</th><th>Listen</th><th>Read</th><th>Write</th><th>Speak</th></tr>
+<tr><td>Bangla</td><td colspan="4">Mother tongue</td></tr>
+<tr><td>English</td><td>C1</td><td>C1</td><td>C1</td><td>C1</td></tr>
+<tr><td>Hindi</td><td>B2</td><td>A1</td><td>A1</td><td>B2</td></tr>
+<tr><td>Italian</td><td>A1</td><td>A1</td><td>A1</td><td>A2</td></tr></table></div></div>
+<div class="box" style="margin-top:20px"><h3>VOLUNTEERING</h3>
+<ul class="rows">
+<li class="row" style="grid-template-columns:96px 1fr"><span class="y">Jun 2024</span><div><b>Photographer &amp; Event Organizer</b><div class="s">EEE Club, IIUC — covered events, coordinated activities, supported planning and logistics</div></div></li>
+<li class="row" style="grid-template-columns:96px 1fr"><span class="y">2021 – 2023</span><div><b>Tarunner Protik</b><div class="s">Youth development and community non-profit, Chattogram</div></div></li>
+<li class="row" style="grid-template-columns:96px 1fr"><span class="y">2017 – 2019</span><div><b>Youths Voice</b><div class="s">Chattogram</div></div></li>
+</ul></div>
+</div>
+</div>
+</section>
+
+<section id="contact">
+<div class="fh"><span class="fn">~/contact.sh</span><h2>Contact</h2></div>
+<div class="sk">
+<div class="code"><span class="d">#!/bin/bash</span><br><span class="k">EMAIL</span>=<span class="s">"mohammadmontasir.official@gmail.com"</span><br><span class="k">ALT</span>=<span class="s">"moonmohammad31@gmail.com"</span><br><span class="k">PHONE</span>=<span class="s">"+880 1641-309327"</span><br><span class="k">LOCATION</span>=<span class="s">"Chattogram, Bangladesh"</span><br><br>echo <span class="s">"Let’s build something reliable."</span></div>
+<div class="act">
+<div class="mailrow"><a class="btn pri" href="mailto:mohammadmontasir.official@gmail.com">✉ mohammadmontasir.official@gmail.com</a>
+<button class="btn cpy" id="cp" type="button" aria-label="Copy email address" title="Copy email">⧉<span class="cn" id="cn" role="status">copied!</span></button></div>
+<a class="btn" href="tel:+8801641309327">☎ +880 1641-309327</a>
+<a class="btn" href="https://wa.me/8801641309327" target="_blank" rel="noopener">WhatsApp</a>
+<a class="btn" href="https://www.facebook.com/montasirmoon.ozx" target="_blank" rel="noopener">Facebook</a>
+</div>
+</div>
+</section>
+<footer><span>© 2026 Mohammad Montasir — built in a terminal, mostly</span><span>Chattogram, Bangladesh</span></footer>
+</main>
+
+<script>
+(function(){
+document.documentElement.classList.add('js');
+const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const tb=document.getElementById('tb'),inp=document.getElementById('in');
+const boot=[['p','whoami'],['o','<strong>Mohammad Montasir</strong>'],['p','cat role.txt'],['o','EEE graduate · CTO @ Digital Softzone · automation &amp; power systems'],['p','./run intro.sh'],['o','loading interests <span class="ac">[automation, power systems, optimisation, design]</span> ... done'],['o','type <span class="ac">help</span> to explore from the keyboard']];
+function add(h,c){const d=document.createElement('div');d.className='l '+(c||'');d.innerHTML=h;tb.appendChild(d);return d}
+function run(i){
+  if(i>=boot.length){inp.disabled=false;inp.placeholder='type a command…';return}
+  const [t,x]=boot[i];
+  if(t==='p'){const d=add('','p'),f='$ '+x;let n=0;(function s(){d.textContent=f.slice(0,n++);if(n<=f.length)setTimeout(s,rm?0:22);else setTimeout(()=>run(i+1),150)})()}
+  else{add(x,'o');setTimeout(()=>run(i+1),rm?0:220)}
+}
+run(0);
+const go=id=>{document.getElementById(id).scrollIntoView({behavior:rm?'auto':'smooth'});return 'jumping to ~/'+id};
+const A=s=>'<span class="ac">'+s+'</span>';
+const cmds={
+help:()=>['available commands:',A('about')+' · '+A('experience')+' · '+A('projects')+' · '+A('skills')+' · '+A('education')+' · '+A('contact'),A('now')+' — current role',A('neofetch')+' — system info, but it is me',A('ls')+' · '+A('whoami')+' · '+A('clear')].join('<br>'),
+about:()=>go('about'),experience:()=>go('experience'),projects:()=>go('projects'),skills:()=>go('skills'),education:()=>go('education'),contact:()=>go('contact'),
+whoami:()=>'Mohammad Montasir — Chattogram, Bangladesh',
+now:()=>'CTO &amp; Product and Services Manager @ Digital Softzone · BSc EEE (IIUC) completed 2026',
+ls:()=>'about.md  experience.log  projects/  skills.json  education.yml  more.txt  contact.sh',
+neofetch:()=>[A('moon')+'@'+A('iiuc'),'-------------------','Degree    : BSc EEE, IIUC','Role      : CTO, Digital Softzone','Research  : Optimal Power Flow (WOA, MFO, APO)','Tools     : MATLAB, MATPOWER, HOMER, Arduino','Goal      : industrial automation'].join('<br>'),
+sudo:()=>'nice try. this terminal has exactly one user.',
+clear:()=>{tb.innerHTML='';return null}};
+inp.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;const r=inp.value.trim();if(!r)return;
+  add('$ '+r.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])),'p');inp.value='';
+  const k=r.toLowerCase().split(' ')[0];
+  if(cmds[k]){const o=cmds[k]();if(o)add(o,'o')}else add('command not found: try '+A('help'),'o');
+  tb.scrollTop=tb.scrollHeight;
+});
+const links=document.querySelectorAll('#railnav a,#topnav a');
+const topnav=document.getElementById('topnav');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>{
+  const on=a.dataset.t===e.target.id;a.classList.toggle('on',on);
+  /* keep the active pill centred in the scrollable mobile strip */
+  if(on&&topnav.contains(a)&&getComputedStyle(topnav).display!=='none'){topnav.scrollTo({left:a.offsetLeft-(topnav.clientWidth-a.offsetWidth)/2,behavior:rm?'auto':'smooth'})}
+})}),{rootMargin:'-35% 0px -55% 0px'});
+document.querySelectorAll('section[id]').forEach(s=>io.observe(s));
+
+/* subtle section reveals */
+const secs=[...document.querySelectorAll('section[id]:not(.hero)')];
+if('IntersectionObserver' in window){
+  secs.forEach(s=>s.classList.add('rv'));
+  const rv=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px',threshold:.05});
+  secs.forEach(s=>rv.observe(s));
+}
+
+document.getElementById('cp').addEventListener('click',async()=>{
+  const m='mohammadmontasir.official@gmail.com';
+  try{await navigator.clipboard.writeText(m)}catch(e){const t=document.createElement('textarea');t.value=m;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}
+  const n=document.getElementById('cn');n.classList.add('show');setTimeout(()=>n.classList.remove('show'),1600);
+});
+})();
+</script>
+</body>
+</html>
